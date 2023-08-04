@@ -197,5 +197,6 @@ pyrightconfig.json
 
 # Files that where created for testing
 *.jsonl
+dbs/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode

@@ -15,7 +15,8 @@ class MySpider(scrapy.Spider):
         "https://www.wildberries.ru/catalog/muzhchinam/odezhda/rubashki",
     ]
 
-    def __init__(self):
+    def __init__(self, name=None, **kwargs):
+        super().__init__(name, **kwargs)
         # We'll use Chrome driver. This will help us to fully load page
         self.driver = webdriver.Chrome()
 
@@ -47,7 +48,7 @@ class MySpider(scrapy.Spider):
         next_page = sel.css(
             'a.pagination-next ::attr(href)').extract_first()
         if next_page is not None:
-            # Adding new link to the queue
+        # Adding new link to the queue
             yield response.follow(next_page, self.parse)
 
     def load_page(self):
@@ -56,6 +57,7 @@ class MySpider(scrapy.Spider):
         time.sleep(1.5)
 
         # Getting the initial scroll height of the page
+        # We decrease height, because we don't need to scroll to the bottom
         page_height = self.driver.execute_script(
             "return document.body.scrollHeight")
         step = 100
@@ -67,11 +69,9 @@ class MySpider(scrapy.Spider):
             if step == page_height:
                 break
 
-            if step % 200 == 0:
-                # Update page_height every 2nd time
-                page_height = self.driver.execute_script(
-                    "return document.body.scrollHeight")
-            step += 300
+            page_height = self.driver.execute_script(
+                "return document.body.scrollHeight") - 300
+            step += 450
 
     def closed(self, reason):
         # Closing driver after scraping is done

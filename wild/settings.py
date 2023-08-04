@@ -1,3 +1,6 @@
+from decouple import config
+
+
 BOT_NAME = "wild"
 
 SPIDER_MODULES = ["wild.spiders"]
@@ -32,10 +35,19 @@ ROBOTSTXT_OBEY = False
 #    "scrapy.extensions.telnet.TelnetConsole": None,
 # }
 
-# ITEM_PIPELINES = {
-#    "wild.pipelines.WildPipeline": 300,
-# }
+ITEM_PIPELINES = {
+   "wild.pipelines.WildPipeline": 100,
+}
 
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+
+POSTGRES_DATABASE = {
+    'host': 'localhost',
+    'port': 5432,
+    'user': config('POSTGRES_USER'),
+    'password': config('POSTGRES_PASSWORD'),
+    'dbname': config('POSTGRES_DB')
+}

@@ -1,2 +1,8 @@
 Scrapy
-scrapy-splash
+psycopg2-binary
+scrapyd
+setuptools
+scrapyd-client
+selenium
+webdriver-manager
+python-decouple
