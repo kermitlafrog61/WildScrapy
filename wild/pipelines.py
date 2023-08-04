@@ -25,7 +25,7 @@ class WildPipeline:
         self.connection.close()
 
     def process_item(self, item, spider):
-        self.cur.execute("insert into wild(title, brand, price, old_price, rating, review_count) values(%s,%s,%s,%s,%s,%s)",
+        self.cur.execute("INSERT INTO wild(title, brand, price, old_price, rating, review_count) values(%s,%s,%s,%s,%s,%s)",
                          (item['title'], item['brand'], item['price'], item['old_price'], item['rating'], item['review_count']))
         self.connection.commit()
         return item
